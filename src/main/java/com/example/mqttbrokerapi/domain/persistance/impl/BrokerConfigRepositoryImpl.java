@@ -5,6 +5,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import com.example.mqttbrokerapi.domain.persistance.BrokerConfigRepository;
 import com.example.mqttbrokerapi.domain.persistance.BrokerConfiguration;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
@@ -14,6 +15,10 @@ public class BrokerConfigRepositoryImpl implements BrokerConfigRepository {
 
     @Override
     public Mono<Void> persistBrokerConfiguration(final String brokerName, final BrokerConfiguration brokerConfiguration) {
+        if (Strings.isEmpty(brokerName)){
+            return Mono.empty();
+        }
+
         configStore.put(brokerName, brokerConfiguration);
         return Mono.empty();
     }

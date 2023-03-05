@@ -123,7 +123,7 @@ public class MqttOperationControllerIntegration {
 
 	@Test
 	public void testSubscribeWorkFlow() throws InterruptedException, ExecutionException {
-		var publishes = mqtt5BlockingClient.publishes(MqttGlobalPublishFilter.ALL);
+		mqtt5BlockingClient.publishes(MqttGlobalPublishFilter.ALL);
 		mqtt5BlockingClient.connect();
 		Mqtt5Publish mqtt5Publish = Mqtt5Publish
 				.builder()
@@ -144,7 +144,7 @@ public class MqttOperationControllerIntegration {
 
 
 	private CompletableFuture<Void> runInFuture() {
-		CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
+		final CompletableFuture<Void> completableFuture = CompletableFuture.runAsync(() -> {
 			Flux<byte[]> flux = webClient
 					.get().uri("/mqtt/"+ BROKER_NAME +"/get/"+ TOPIC_1)
 					.accept(MediaType.valueOf("application/stream+json"))
