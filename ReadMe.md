@@ -1,3 +1,6 @@
+# MQTT Broker API
+Spring-boot 3.0.3 + Reactive + Hivemq Powered application for demo purposes.
+
 # How to run me 🏃
 
 ## Run with the jar 
