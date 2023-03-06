@@ -10,6 +10,7 @@ import com.hivemq.client.mqtt.mqtt5.message.subscribe.Mqtt5Subscribe;
 import com.hivemq.client.mqtt.mqtt5.reactor.Mqtt5ReactorClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -32,6 +33,13 @@ public class MqttConfig {
     public Function<String, Mqtt5Subscribe> mqtt5SubscribeFactory() {
         return this::mqtt5Subscribe;
     }
+
+    @Value("${broker.credentials.username}")
+    private String userName;
+
+    @Value("${broker.credentials.password}")
+    private String password;
+
 
     @Bean
     @Scope(value = "prototype")
@@ -59,8 +67,8 @@ public class MqttConfig {
                 })
                 .sslWithDefaultConfig()
                 .simpleAuth()
-                .password("f3X!t9QvkPMj.Di".getBytes())
-                .username("akayeshmantha")
+                .password(password.getBytes())
+                .username(userName)
                 .applySimpleAuth()
                 .buildRx();
 
